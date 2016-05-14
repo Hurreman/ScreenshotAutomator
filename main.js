@@ -20,7 +20,7 @@ class ScreenshotAutomator {
 	 */
 	constructor( url, prefix, interval, path ) {
 		
-		this.defaultInterval 	= 2;
+		this.defaultInterval 	= 10;
 		this.defaultPrefix		= 'screenshot';
 		this.timer 				= null;
 		this.lastScreenshot		= null;

@@ -1,0 +1,27 @@
+{
+  "name": "screenshotautomator",
+  "version": "0.1.0",
+  "description": "Periodically take screenshots of a website and check for changes.",
+  "main": "main.js",
+  "dependencies": {
+    "dateformat": "^1.0.12",
+    "webshot": "^0.18.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hurreman/ScreenshotAutomator.git"
+  },
+  "keywords": [
+    "screenshot"
+  ],
+  "author": "Fredrik Grääs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hurreman/ScreenshotAutomator/issues"
+  },
+  "homepage": "https://github.com/Hurreman/ScreenshotAutomator#readme"
+}
