@@ -1,3 +1,10 @@
+/**
+ * ScreenshotAutomator
+ * Periodically take screenshots of a chosen URL, and only save the screenshot if the two images differ (currently only compares filesize).
+ * @author Fredrik "Hurreman" Grääs
+ * @todo Add different pre-defined sceen sizes and the ability to set custom screen sizes.
+ * @todo Add actual image comparison by using resembles.js or similar.
+ */
 "use strict";
 
 var webshot 	= require( 'webshot' ),
@@ -30,6 +37,9 @@ class ScreenshotAutomator {
 		this.path 		= path;
 		this.interval 	= interval;
 
+		/**
+		 * An url is required, duh!
+		 */
 		if( typeof( this.url ) == 'undefined' ) {
 			console.log( 'ERROR: No URL defined! Aborting.' );
 			return false;			
@@ -41,6 +51,7 @@ class ScreenshotAutomator {
 		 */
 		if( typeof( this.prefix ) == 'undefined' ) {
 			console.log( 'No prefix defined, using ' + this.defaultPrefix + ' instead.' );
+			this.prefix = this.defaultPrefix;
 		}
 
 
@@ -64,6 +75,11 @@ class ScreenshotAutomator {
 			this.interval = this.defaultInterval;
 		}
 
+		// Create screenshot folder if it doesn't exist
+		if ( !fs.existsSync( this.path ) ) {
+		    fs.mkdirSync( this.path );
+		}
+
 		// Get last screenshot, if any
 		this.lastScreenshot = this.getLastScreenshot();
 
@@ -80,9 +96,19 @@ class ScreenshotAutomator {
 		var now 		= new Date();
 		var nowString 	= dateformat( now, 'yyyy-mm-dd-HH-MM-ss' );
 		var filename 	= this.path + '/' + this.prefix + '_' + nowString + '.png';
-		
 
-		webshot( this.url, filename, function( err ) {
+		var options = {
+			windowSize: {
+				width: 1680, 
+				height: 1240
+			},
+			shotSize: {
+				width: 'window',
+				height: 'all'
+			}
+		};
+
+		webshot( this.url, filename, options, function( err ) {
 			
 			var filesize = fs.statSync( filename ).filesize;
 
@@ -124,7 +150,7 @@ class ScreenshotAutomator {
 		});
 
 		if ( typeof( screenshots ) !== 'undefined' && screenshots.length > 0 ) {
-			return { filename: lastScreenshot[ 0 ], filesize: fs.statSync( lastScreenshot[ 0 ] ).size };
+			return { filename: screenshots[ 0 ], filesize: fs.statSync( screenshots[ 0 ] ).size };
 		}
 		else {
 			return false;

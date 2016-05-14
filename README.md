@@ -27,3 +27,8 @@ $ node main.js google.com
 ```
 $ node main.js google.com Google 3600 ./Screens
 ```
+
+
+## Known issues
+
+- Doesn't work very well with sites that rely on scroll-behavior or have fullscreen sliders.
